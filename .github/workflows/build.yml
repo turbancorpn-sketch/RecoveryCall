@@ -2,6 +2,8 @@ name: Build APK
 on:
   push:
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,3 +22,10 @@ jobs:
         with:
           name: RecoveryCall-apk
           path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp app/build/outputs/apk/debug/app-debug.apk RecoveryCaller.apk
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest RecoveryCaller.apk --title "Recovery Caller APK" --notes "Install RecoveryCaller.apk on your Android phone."
