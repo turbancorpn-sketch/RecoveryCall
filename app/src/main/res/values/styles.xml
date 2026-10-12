@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Recovery Caller</string>
+    <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
